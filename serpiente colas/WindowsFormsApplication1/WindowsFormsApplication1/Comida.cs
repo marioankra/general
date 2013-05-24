@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Collections;
+using System.Timers;
 namespace WindowsFormsApplication1
 {
     class Comida
@@ -12,9 +13,23 @@ namespace WindowsFormsApplication1
         ///esta clase esta relacionada con juego y solo existe una
         /// "cantidad" muestra el numero de nodos que la serpiente debera crecer
         /// </summary>
+        /// 
+        private int _marca = 3;
         private int _x, _y;
         private int _cantidad;
-
+        private Timer timerPosicion;
+        private OnPingListener mListener;
+        public interface OnPingListener
+        {
+            void onPing();
+            void onColor();
+        }
+        public void setOnPingListener(OnPingListener listener)
+        {
+            mListener = listener;
+        }
+   
+       
        /*El constructor genera dos coordenadas y busca si estan ocupadas si no genera en ellas la comida, si estan ocupadas genera otras y vuelve a buscarlas
         * sx e sy son la posicion de la cabeza serpiente
         *La cantidad de comida se genera de forma aleatoria entre 0 y 5  
@@ -23,7 +38,43 @@ namespace WindowsFormsApplication1
 
         public Comida(Queue tablero, Queue serpiente, int tamaño,int sx, int sy)
         {
+            timerPosicion = new Timer();
+            Random r = new Random(DateTime.Now.Millisecond);
+            generarCoordenadasComida(tablero,serpiente,tamaño,sx,sy); 
+            _cantidad = r.Next(1, 5);
+            timerPosicion.Elapsed += new ElapsedEventHandler(timerPosicion_tick);
+            timerPosicion.
+            timerPosicion.Enabled = true;
+            timerPosicion.Interval = 2000;
 
+        }
+
+
+        public int X
+        {
+            get { return _x; }
+            set { _x = value; }
+        }
+
+        public int Y
+        {
+            get { return _y; }
+            set { _y = value; }
+        }
+
+        public int Cantidad {
+            get { return _cantidad; }
+            set { _cantidad = value; }
+        }
+
+        public void pararTimer()
+        {
+            timerPosicion.Stop();
+
+        }
+
+        public void generarCoordenadasComida (Queue tablero, Queue serpiente, int tamaño,int sx, int sy)
+        {
             System.Collections.IEnumerator ent = tablero.GetEnumerator();
             System.Collections.IEnumerator ens = serpiente.GetEnumerator();
             
@@ -65,27 +116,16 @@ namespace WindowsFormsApplication1
             } while (estaEnSerpiente || estaEnTablero);
 
 
+}
+        
 
-                        _cantidad = r.Next(1, 5);
-        }
 
-
-        public int X
+        private void timerPosicion_tick(object source, ElapsedEventArgs e)
         {
-            get { return _x; }
-            set { _x = value; }
+            mListener.onPing();
+            if (_marca == 0) mListener.onColor();
+            else _marca--;
         }
-
-        public int Y
-        {
-            get { return _y; }
-            set { _y = value; }
-        }
-
-        public int Cantidad {
-            get { return _cantidad; }
-            set { _cantidad = value; }
-        }
-
+     
     }
 }

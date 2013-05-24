@@ -15,23 +15,23 @@ namespace WindowsFormsApplication1
     /// comidaCoor, n e y son variables temporales
     ///
     /// </summary>
-    class Juego
+    class Juego : Comida.OnPingListener 
     {
         // Genera todas los objetos 
         private Nodo n;
-        private Tablero tablero;
+        
         private Serpiente serpiente;
         private Comida comida;
         private int _tamaño;
         private int[] comidaCoor;
         private Boolean _hayFin;
-       
+        private Tablero tablero;
  
         public Juego(int tamaño)
         {
             comidaCoor = new int[2];
             _tamaño = tamaño;
-            tablero = new Tablero(_tamaño);
+            tablero= new Tablero(_tamaño);
             serpiente = new Serpiente(tablero.Mapa, _tamaño);
             generarComida();
         }
@@ -45,7 +45,10 @@ namespace WindowsFormsApplication1
         //Genera un nuevo objeto comida  y actualiza las coordenadas
         private void generarComida()
         {
+
+            if (comida != null ) comida.pararTimer();
             comida = new Comida(tablero.Mapa, serpiente. Cuerpo, _tamaño, serpiente.X, serpiente.Y);
+            comida.setOnPingListener(this);
             comidaCoor[0] = comida.X;
             comidaCoor[1] = comida.Y;
        
@@ -127,12 +130,32 @@ namespace WindowsFormsApplication1
             get { return comidaCoor; }
             set { comidaCoor = value; }
         }
-
+       
         public int cantidadComida
         {
             get { return comida.Cantidad; }
             set { comida.Cantidad = value; }
         }
 
+        public void onPing(){
+            comida.generarCoordenadasComida(tablero.Mapa, serpiente.Cuerpo, _tamaño, serpiente.X, serpiente.Y);
+            comidaCoor[0] = comida.X;
+            comidaCoor[1] = comida.Y;
+        }
+
+        public void onColor() {
+        
+        
+        }
+
+        private OnVisualListener mListener;
+        public interface OnVisualListener
+        {
+            void onPintar();
+        }
+        public void setOnPingListener(OnVisualListener listener)
+        {
+            mListener = listener;
+        }
     }
 }

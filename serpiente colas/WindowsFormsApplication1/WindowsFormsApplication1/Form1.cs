@@ -17,7 +17,7 @@ using System.Timers;
 
 namespace WindowsFormsApplication1
 {
-    public partial class Form1 : Form
+    public partial class Form1 : Form, Juego.OnVisualListener
     {
         //Tamaño es el numero de nodos que entran  en el tablero y escala el numero de pixeles de cada uno
         //coordendadas es un array temporal
@@ -137,7 +137,7 @@ namespace WindowsFormsApplication1
         private void timer1_Tick(object sender, EventArgs e)
         {
             cambiarDireccion(_direccion);
-            partida.actualizar(sender, e);
+                partida.actualizar(sender, e);
             pictureBox1.Refresh();
 
             if (partida.Fin)

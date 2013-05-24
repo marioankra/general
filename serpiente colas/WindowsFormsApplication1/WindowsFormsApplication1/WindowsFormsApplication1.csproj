@@ -45,6 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Class1.cs" />
+    <Compile Include="Nivel.cs" />
     <Compile Include="Comida.cs" />
     <Compile Include="Juego.cs" />
     <Compile Include="Tablero.cs" />

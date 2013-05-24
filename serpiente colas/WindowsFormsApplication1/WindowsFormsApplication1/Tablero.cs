@@ -17,6 +17,7 @@ namespace WindowsFormsApplication1
         /// </summary>
         private Queue _mapa;
         private int _tamaño;
+     
         public Tablero(int tamaño)
         {
             _tamaño = tamaño;
