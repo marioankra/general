@@ -20,10 +20,10 @@ namespace WindowsFormsApplication1
        
 
         public  Nivel (int dificultad, int velocidad , int objetivo,int tamaño) {
-            dificultad=_dificultad;
-            objetivo = _objetivo;
-            velocidad = _velocidad;
-            tamaño = _tamaño;
+            _dificultad=dificultad;
+            _objetivo = objetivo;
+            _velocidad = velocidad;
+            _tamaño = tamaño;
            
 
              tablero = new Tablero(_tamaño, _dificultad);

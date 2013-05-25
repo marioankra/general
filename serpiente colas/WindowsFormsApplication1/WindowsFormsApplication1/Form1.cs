@@ -17,64 +17,52 @@ using System.Timers;
 
 namespace WindowsFormsApplication1
 {
-    public partial class Form1 : Form, Juego.OnVisualListener
+    public partial class Form1 : Form
     {
         //Tamaño es el numero de nodos que entran  en el tablero y escala el numero de pixeles de cada uno
         //coordendadas es un array temporal
-        private int _tamaño = 20;
-        private int escala;
+         private int escala;
         private Juego partida ;
-        private int _direccion;
         private int[] _coordenadas;
+        private PictureBox pictureBox1;
         Nodo n;
 
         public Form1()
         
         {
             InitializeComponent();
-            timer1.Start();
-            partida = new Juego(_tamaño);
+             partida = new Juego();
+
+
+             timer1.Interval = 50;
         }
 
         // p pausa el juego y n crea una nueva partida, los movimientos se generan con las teclas de direccion
         private void Form1_Key(object sender, KeyEventArgs e)
         {
 
-            if (e.KeyData == Keys.Up)
+            if (e.KeyData == Keys.W)
             {
-                _direccion=3;
+                partida.Direccion=3;
             }
 
-            if (e.KeyData == Keys.Right)
+            if (e.KeyData == Keys.D)
             {
-                _direccion=0;               
+                partida.Direccion = 0;               
             }
            
-            if (e.KeyData == Keys.Down)
+            if (e.KeyData == Keys.S)
             {
-                _direccion=1; 
+                partida.Direccion = 1; 
             }
 
             
-            if (e.KeyData == Keys.Left)
+            if (e.KeyData == Keys.A)
             {
-                _direccion=2; 
+                partida.Direccion = 2; 
             }
 
-            if (e.KeyData == Keys.P)
-            { 
-                
-                if (timer1.Enabled == true)
-                    timer1.Enabled = false;
-                else
-                    timer1.Enabled = true;
-            }
-            if (e.KeyData == Keys.N)
-            {
-                timer1.Stop();
-                partida = new Juego(_tamaño);
-               timer1.Start();
-            }
+            
 
 
         }
@@ -82,7 +70,7 @@ namespace WindowsFormsApplication1
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
             _coordenadas=new int[2];
-            escala = pictureBox1.Width / _tamaño;
+            escala = pictureBox1.Width / partida.Tamaño;
             Graphics lienzo;
             lienzo = e.Graphics; 
             _coordenadas= partida.Comida;
@@ -90,7 +78,7 @@ namespace WindowsFormsApplication1
            
             
             System.Collections.IEnumerator ent = partida.Tablero.GetEnumerator();
-            System.Collections.IEnumerator ens = partida.CuerpoSerpiente.GetEnumerator();
+            System.Collections.IEnumerator ens = partida.Serpiente.GetEnumerator();
             while (ent.MoveNext())
             {
                 
@@ -128,25 +116,29 @@ namespace WindowsFormsApplication1
           
         }
 
-        private void cambiarDireccion(int direccion ) {
-            partida.cambiardireccion(direccion);
-                }
-
-
-      //  Cada tick del reloj cambia la direccion (sim procede) y actualiza la serpiente y el picturebox
         private void timer1_Tick(object sender, EventArgs e)
         {
-            cambiarDireccion(_direccion);
-                partida.actualizar(sender, e);
-            pictureBox1.Refresh();
-
-            if (partida.Fin)
-            {
-                timer1.Stop();
-            }
-
-
+                    pictureBox1.Refresh();
+            if (partida.Fin == true) timer1.Stop();
         }
+
+        private void entrenamiento_Click(object sender, EventArgs e)
+        {
+            pictureBox1 = new PictureBox();
+            pictureBox1.Location = new System.Drawing.Point(12, 12);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new System.Drawing.Size(300, 300);
+            pictureBox1.TabIndex = 0;
+            pictureBox1.TabStop = false;
+            pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
+            partida.generarModo(1);
+            timer1.Start();
+         
+        }
+
     
+
+
+
     }
 }
