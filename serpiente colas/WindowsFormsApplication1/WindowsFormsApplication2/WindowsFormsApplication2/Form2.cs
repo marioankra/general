@@ -19,11 +19,11 @@ namespace WindowsFormsApplication1
         Nodo n;
 
 
-        public Form2(int modo)
+        public Form2(int modo, int nivel)
         {
             InitializeComponent();
             partida = new Juego();
-            partida.generarModo(modo);
+            partida.generarModo(modo, nivel);
             
 
             timer1.Interval = 50;
@@ -38,13 +38,12 @@ namespace WindowsFormsApplication1
         private void timer1_Tick(object sender, EventArgs e)
         {
             pictureBox1.Refresh();
+           // textBox1.Text = partida.Puntos.ToString();
+            label1.Text = "Puntuación: " + partida.Puntos.ToString() + " Objetivo: " + partida.Objetivo.ToString();
+           // textBox2.Text = partida.Objetivo.ToString();
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-           
-        }
-
+    
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
             _coordenadas = new int[2];
@@ -52,29 +51,28 @@ namespace WindowsFormsApplication1
             Graphics lienzo;
             lienzo = e.Graphics;
             _coordenadas = partida.Comida;
-
-
+           
 
             System.Collections.IEnumerator ent = partida.Tablero.GetEnumerator();
             System.Collections.IEnumerator ens = partida.Serpiente.GetEnumerator();
             while (ent.MoveNext())
             {
-
+              
                 _coordenadas = (int[])ent.Current;
-                lienzo.FillRectangle(Brushes.Red, _coordenadas[0] * escala, _coordenadas[1] * escala, escala, escala);
+                lienzo.FillRectangle(partida.CTablero, _coordenadas[0] * escala, _coordenadas[1] * escala, escala, escala);
 
             }
 
             while (ens.MoveNext())
             {
                 n = (Nodo)ens.Current;
-                lienzo.FillRectangle(Brushes.Green, n.X * escala, n.Y * escala, escala, escala);
+                lienzo.FillRectangle(partida.CSerpiente, n.X * escala, n.Y * escala, escala, escala);
 
             }
 
 
             _coordenadas = partida.Comida;
-            lienzo.FillRectangle(Brushes.Blue, _coordenadas[0] * escala, _coordenadas[1] * escala, escala, escala);
+            lienzo.FillRectangle(partida.CComida, _coordenadas[0] * escala, _coordenadas[1] * escala, escala, escala);
             lienzo.DrawString(partida.cantidadComida.ToString(), new Font("Arial", 12), Brushes.Yellow, _coordenadas[0] * escala, _coordenadas[1] * escala);
 
 
@@ -107,5 +105,9 @@ namespace WindowsFormsApplication1
                 partida.Direccion = 2;
             }
         }
+
+    
+
+    
     }
 }

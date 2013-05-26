@@ -31,6 +31,10 @@ namespace WindowsFormsApplication1
         
         }
 
+        public bool buscarenTablero(int x, int y) {
+
+            return tablero.buscarenTablero(x, y);
+        }
 
         public Queue Tablero
         {

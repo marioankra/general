@@ -17,43 +17,17 @@ namespace WindowsFormsApplication1
        /// </summary>
      
         private int _x, _y ,_direccion;
-        private Queue cuerpoSerpiente = new Queue();
+        private Queue _cuerpoSerpiente = new Queue();
         private int _cantidadCrecer = 0;
         
 
        //Constructor de serpiente, sigue la misma filosofia que comida para no empezar en una zona ocupada
-        public Serpiente(Queue tablero, int tamaño)
+        public Serpiente(int x, int y, int direccion)
         {
-
-            System.Collections.IEnumerator ent = tablero.GetEnumerator();
-            
-            Random r = new Random(DateTime.Now.Millisecond);
-            int[] coordenadas= new int[2];
-            Boolean estaEnTablero;
-            
-            do
-            {
-                estaEnTablero = false;
-                _x = r.Next(1, tamaño-1);
-                _y = r.Next(1, tamaño-1);
-
-                while (ent.MoveNext()  && !estaEnTablero) {
-                    coordenadas = (int[])ent.Current;
-                    if (coordenadas[0] == _x && coordenadas[1] == _y)
-                        estaEnTablero = true;
-                    else
-                        estaEnTablero = false;
-                }
-              
-
-            } while (estaEnTablero);
-
-            cuerpoSerpiente.Enqueue(new Nodo(_x, _y));
-           
-                 if (_x > tamaño / 2)
-                _direccion = 2;
-            else
-                _direccion = 0;
+            _direccion = direccion;
+            _x = x;
+            _y = y;
+            _cuerpoSerpiente.Enqueue(new Nodo(_x, _y));
              }
 
 
@@ -94,10 +68,10 @@ namespace WindowsFormsApplication1
 
 
             }
-            cuerpoSerpiente.Enqueue(new Nodo(_x, _y));
+            _cuerpoSerpiente.Enqueue(new Nodo(_x, _y));
             
             if (_cantidadCrecer == 0)
-                cuerpoSerpiente.Dequeue();
+                _cuerpoSerpiente.Dequeue();
             else
                 _cantidadCrecer--;
             
@@ -106,22 +80,51 @@ namespace WindowsFormsApplication1
 
         public Queue Cuerpo
         {
-            get { return cuerpoSerpiente; }
-            set { cuerpoSerpiente = value; }
+            get { return _cuerpoSerpiente; } 
         }
 
         public int X
         {
             get { return _x; }
-            set { _x = value; }
         }
 
         public int Y
         {
-            get { return _y; }
-            set { _y = value; }
+            get { return _y; }     
         }
 
+        public bool buscarenSerpiente(int x, int y, bool enCabeza)
+        {
+            bool estaSerpiente= false;
+            Nodo n;
+            int numColision = 0;
+            System.Collections.IEnumerator ent = _cuerpoSerpiente.GetEnumerator();
+         
+            if (enCabeza == true) {
+            while (ent.MoveNext() && !estaSerpiente)
+            {
+               n = (Nodo)ent.Current;
+                if (n.X == x && n.Y == y)
+                    estaSerpiente = true;
+            }
+        }
+            else
+            {
+               
+                while (ent.MoveNext() && !estaSerpiente)
+                {
+                    n = (Nodo)ent.Current;
+                    if (n.X == x && n.Y == y)
+                        numColision++;
+                     
+                       
+                }
+                if (numColision == 2)
+                    estaSerpiente = true;
+            }
 
+            return estaSerpiente;
+        }
+    
     }        
 }

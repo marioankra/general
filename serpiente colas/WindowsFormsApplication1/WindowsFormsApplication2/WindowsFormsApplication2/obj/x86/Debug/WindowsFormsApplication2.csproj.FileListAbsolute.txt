@@ -1,0 +1,10 @@
+C:\Users\oreka\Documents\GitHub\general\serpiente colas\WindowsFormsApplication1\WindowsFormsApplication2\WindowsFormsApplication2\bin\Debug\WindowsFormsApplication2.exe
+C:\Users\oreka\Documents\GitHub\general\serpiente colas\WindowsFormsApplication1\WindowsFormsApplication2\WindowsFormsApplication2\bin\Debug\WindowsFormsApplication2.pdb
+C:\Users\oreka\Documents\GitHub\general\serpiente colas\WindowsFormsApplication1\WindowsFormsApplication2\WindowsFormsApplication2\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\oreka\Documents\GitHub\general\serpiente colas\WindowsFormsApplication1\WindowsFormsApplication2\WindowsFormsApplication2\obj\x86\Debug\WindowsFormsApplication1.Form1.resources
+C:\Users\oreka\Documents\GitHub\general\serpiente colas\WindowsFormsApplication1\WindowsFormsApplication2\WindowsFormsApplication2\obj\x86\Debug\WindowsFormsApplication1.Form2.resources
+C:\Users\oreka\Documents\GitHub\general\serpiente colas\WindowsFormsApplication1\WindowsFormsApplication2\WindowsFormsApplication2\obj\x86\Debug\WindowsFormsApplication1.Properties.Resources.resources
+C:\Users\oreka\Documents\GitHub\general\serpiente colas\WindowsFormsApplication1\WindowsFormsApplication2\WindowsFormsApplication2\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\oreka\Documents\GitHub\general\serpiente colas\WindowsFormsApplication1\WindowsFormsApplication2\WindowsFormsApplication2\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\oreka\Documents\GitHub\general\serpiente colas\WindowsFormsApplication1\WindowsFormsApplication2\WindowsFormsApplication2\obj\x86\Debug\WindowsFormsApplication2.exe
+C:\Users\oreka\Documents\GitHub\general\serpiente colas\WindowsFormsApplication1\WindowsFormsApplication2\WindowsFormsApplication2\obj\x86\Debug\WindowsFormsApplication2.pdb

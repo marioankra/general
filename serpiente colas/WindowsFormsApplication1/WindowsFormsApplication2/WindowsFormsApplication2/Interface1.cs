@@ -18,6 +18,7 @@ namespace WindowsFormsApplication1
          void setHayFin(bool hayfin);
          Queue getTablero();
          Queue getSerpiente();
-         
+         int getPuntuacion();
+         int getObjetivo();    
     }
 }

@@ -17,7 +17,7 @@ namespace WindowsFormsApplication1
         /// </summary>
         private Queue _mapa;
         private int _tamaño;
-
+        private int _numpuntos=15;
         public Tablero(int tamaño, int dificultad)
         {
             _tamaño = tamaño;
@@ -46,27 +46,27 @@ namespace WindowsFormsApplication1
             {
                 case 0:
                     generarBase();
-
+                   
 
                     break;
                 case 1:
-                   // generarBase();
-                    generarPuntos();
+                   generarBase();
+                   generarPuntos(_numpuntos * dificultad);
 
                     break;
 
                 case 2:
                     generarBase();
-
+                    generarPuntos(_numpuntos * dificultad);
                    
 
                     break;
                 case 3:
                     generarBase();
-                    generarPuntos();
-                
+                    generarPuntos(_numpuntos * dificultad);
+                   
                     break;
-
+                    
 
             }
         }
@@ -82,7 +82,7 @@ namespace WindowsFormsApplication1
             {
                 for (int j = 0; j < _tamaño; j++)
                 {//ÑAPA
-                    if (j == 0 || i == 0 || j == _tamaño - 2 || i == _tamaño - 1)
+                    if (j == 0 || i == 0 || j == _tamaño - 1 || i == _tamaño - 1)
                     {
                         coordenadas = new int[2];
                         coordenadas[0] = i;
@@ -94,20 +94,36 @@ namespace WindowsFormsApplication1
 
         }
 
-        private void generarPuntos()
+        private void generarPuntos(int cantidad)
         {
+           
             int[] coordenadas = new int[2];
             Random r = new Random(DateTime.Now.Millisecond);
 
-            for (int i = 0; i < 15; i++)
+            while (cantidad != 0)
             {
                 coordenadas = new int[2];
-                coordenadas[0] = r.Next(2, _tamaño - 2);
-                coordenadas[1] = r.Next(2, _tamaño - 2);
+                coordenadas[0] = r.Next(2, _tamaño - 1);
+                coordenadas[1] = r.Next(2, _tamaño - 1);
                 _mapa.Enqueue(coordenadas);
+                cantidad--;
             }
+
         }
 
+        public bool buscarenTablero(int x, int y) {
+            bool estaTablero = false;
+            int[] coordenadas;
+            System.Collections.IEnumerator ent = _mapa.GetEnumerator();
+            while (ent.MoveNext() && !estaTablero)
+            {
+                coordenadas = (int[])ent.Current;
+                if (coordenadas[0] == x && coordenadas[1] == y)
+                    estaTablero = true;
+               }
+            return estaTablero;
+        }
+       
 
        
     }
