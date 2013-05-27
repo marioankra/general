@@ -19,6 +19,7 @@ namespace WindowsFormsApplication1
          Queue getTablero();
          Queue getSerpiente();
          int getPuntuacion();
-         int getObjetivo();    
+         int getObjetivo();
+         void setPlayer(int player);
     }
 }

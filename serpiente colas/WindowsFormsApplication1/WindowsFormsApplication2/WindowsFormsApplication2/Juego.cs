@@ -11,8 +11,8 @@ namespace WindowsFormsApplication1
     {
 
         private Entrenamiento entrenamiento;
-        private Entrenamiento competicion;
-        private Entrenamiento individual;
+        private Multi multi;
+        private Individual individual;
         private Interface1 juegoActual;
         private int _modo;
         private int _tamaño = 20;
@@ -32,27 +32,35 @@ namespace WindowsFormsApplication1
 
         }
         
-        public void generarModo(int tipo, int nivel) {
+        public  Juego(int tipo, int opcion) {
             entrenamiento=null;
-            competicion=null;
+            multi=null;
             individual=null;
 
             _modo = tipo;
             switch (_modo)
             {
                 case 1:
-                    entrenamiento = new Entrenamiento(_tamaño, nivel,this);
+                    entrenamiento = new Entrenamiento(_tamaño, opcion,this);
                   
                     juegoActual = entrenamiento;
                    
                     break;
-                /*case 2:
-                    Console.WriteLine("Case 2");
+               case 2:
+                   individual =  new Individual(_tamaño, opcion);
+                  
+                    juegoActual = individual;
+                   
                     break;
-               case 3 :
-                    Console.WriteLine("Default case");
+                 case 3:
+                multi = new Multi(_tamaño, opcion);
+                  
+                    juegoActual = multi;
+                  
                     break;
-*/            }
+
+
+          }
         
         }
 
@@ -73,6 +81,8 @@ namespace WindowsFormsApplication1
             get { return _cComida; }
 
         }
+
+        public int  Player {set { juegoActual.setPlayer(value); } }
         public Queue Tablero { get { return juegoActual.getTablero(); } }
         public Queue Serpiente { get { return juegoActual.getSerpiente(); } }
 

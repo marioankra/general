@@ -15,7 +15,7 @@ namespace WindowsFormsApplication1
     /// comidaCoor, n e y son variables temporales
     ///
     /// </summary>
-    class Entrenamiento : Comida.OnPingListener, Interface1
+    class Individual : Comida.OnPingListener, Interface1
     {
 
         public struct CNivel
@@ -24,13 +24,14 @@ namespace WindowsFormsApplication1
             public int objetivo;
             public int dificultad;
             public Nivel nivel;
+         
             // public Boolean TableroN;
 
         }
 
 
         // Genera todas los objetos 
-
+        private int _modoTablero; 
         private Timer timerJuego;
         private Serpiente serpiente;
         private Comida comida;
@@ -39,7 +40,7 @@ namespace WindowsFormsApplication1
         private Boolean _hayFin;
 
         private int _direccionSerpiente;
-        public Boolean _block = false;
+
         private CNivel[] niveles;
         private CNivel nivelActual;
         private int _puntos;
@@ -48,6 +49,8 @@ namespace WindowsFormsApplication1
 
 
         private OnPingListener cListener;
+        private int opcion;
+        private Juego juego;
         public interface OnPingListener
         {
             void onColor(bool color);
@@ -62,10 +65,10 @@ namespace WindowsFormsApplication1
 
 
 
-        public Entrenamiento(int tamaño, int nivel, OnPingListener listener)
+        public Individual(int tamaño, int opcion /*,OnPingListener listener*/)
         {
-            setOnPingListener(listener);
-
+          //  setOnPingListener(listener);
+            _modoTablero=opcion;
             _tamaño = tamaño;
             comidaCoor = new int[2];
             timerJuego = new Timer();
@@ -80,25 +83,56 @@ namespace WindowsFormsApplication1
             niveles[1].nivel = new Nivel(niveles[1].dificultad, niveles[1].velocidad, niveles[1].objetivo, _tamaño);
             niveles[2].dificultad = 2;
             niveles[2].velocidad = 400;
-            niveles[2].objetivo = 18;
+            niveles[2].objetivo = 1;
             niveles[2].nivel = new Nivel(niveles[2].dificultad, niveles[2].velocidad, niveles[2].objetivo, _tamaño);
             niveles[3].dificultad = 3;
-            niveles[3].velocidad = 100;
-            niveles[3].objetivo = 10;
+            niveles[3].velocidad = 200;
+            niveles[3].objetivo = 1;
             niveles[3].nivel = new Nivel(niveles[3].dificultad, niveles[3].velocidad, niveles[3].objetivo, _tamaño);
-
-
-
-            nivelActual = niveles[nivel];
+            nivelActual = niveles[2];
             generarSerpiente();
             generarComida();
-
             timerJuego.Interval = nivelActual.velocidad;
-
             timerJuego.Elapsed += new ElapsedEventHandler(timerJuego_tick);
             timerJuego.Start();
 
         }
+
+
+
+
+        private void cambiarNivel()
+        {
+            if (_puntos >= nivelActual.objetivo)
+            {
+                
+                if (nivelActual.dificultad == niveles.Length-1) _hayFin = true;
+                else
+                {
+                    if (_modoTablero == 0)
+                    {
+                        timerJuego.Stop();
+                        nivelActual = niveles[nivelActual.dificultad + 1];
+                        generarSerpiente();
+                        generarComida();
+                        timerJuego.Interval = nivelActual.velocidad;
+                        timerJuego.Start();
+                    }
+                    else
+                    {
+             
+                        timerJuego.Stop();
+                        //TODO
+                        
+                        timerJuego.Interval = nivelActual.velocidad;
+                        timerJuego.Start();
+                    
+                    
+                    }
+                }
+            }
+        }
+
 
         //Transmite a serpiente la direccion actual
         public void cambiardireccion(int direccion)
@@ -126,7 +160,7 @@ namespace WindowsFormsApplication1
             comida.setOnPingListener(this);
             comidaCoor[0] = comida.X;
             comidaCoor[1] = comida.Y;
-            cListener.onColor(comida.EstaSenyal);
+            //cListener.onColor(comida.EstaSenyal);
         }
 
         private void generarSerpiente()
@@ -151,7 +185,7 @@ namespace WindowsFormsApplication1
         //Metodo llamado en cada tick del timer, mueve la serpiente y comprueba si hay colisiones
         public void actualizar()
         {
-
+            cambiarNivel();
             serpiente.Mover();
             if (comida.buscarenComida(serpiente.X, serpiente.Y))
             {
@@ -177,10 +211,7 @@ namespace WindowsFormsApplication1
             return serpiente.Cuerpo;
         }
 
-        void Interface1.setPlayer(int player)
-        {
 
-        }
 
         void Interface1.setDir(int dir)
         {
@@ -188,6 +219,10 @@ namespace WindowsFormsApplication1
 
         }
 
+        void Interface1.setPlayer(int player)
+        {
+        
+        }
 
         int Interface1.getTamaño()
         {
@@ -240,7 +275,7 @@ namespace WindowsFormsApplication1
             if (!comida.EstaSenyal)
             {
                 comida.EstaSenyal = true;
-                cListener.onColor(comida.EstaSenyal);
+             //   cListener.onColor(comida.EstaSenyal);
             }
 
         }

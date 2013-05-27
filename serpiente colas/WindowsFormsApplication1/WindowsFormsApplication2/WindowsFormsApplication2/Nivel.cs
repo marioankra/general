@@ -16,7 +16,9 @@ namespace WindowsFormsApplication1
         private int _dificultad;
         private Tablero tablero;
 
-
+        public Tablero TablerodelNivel {
+            get { return tablero; }
+        }
        
 
         public  Nivel (int dificultad, int velocidad , int objetivo,int tamaño) {

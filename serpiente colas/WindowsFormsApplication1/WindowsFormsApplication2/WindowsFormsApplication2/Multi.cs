@@ -15,7 +15,7 @@ namespace WindowsFormsApplication1
     /// comidaCoor, n e y son variables temporales
     ///
     /// </summary>
-    class Entrenamiento : Comida.OnPingListener, Interface1
+    class Multi : Comida.OnPingListener, Interface1
     {
 
         public struct CNivel
@@ -28,22 +28,23 @@ namespace WindowsFormsApplication1
 
         }
 
+        
+
 
         // Genera todas los objetos 
-
+        private Serpiente[] _aSerpiente;
         private Timer timerJuego;
-        private Serpiente serpiente;
         private Comida comida;
         private int _tamaño;
         private int[] comidaCoor;
         private Boolean _hayFin;
-
-        private int _direccionSerpiente;
+        private int _player;
+        private int[] _direccionSerpiente;
         public Boolean _block = false;
         private CNivel[] niveles;
         private CNivel nivelActual;
         private int _puntos;
-
+        private int _numserpientes=2;
         private Random r = new Random(DateTime.Now.Millisecond);
 
 
@@ -62,34 +63,33 @@ namespace WindowsFormsApplication1
 
 
 
-        public Entrenamiento(int tamaño, int nivel, OnPingListener listener)
+        public Multi(int tamaño, int nivel /*, OnPingListener listener*/)
         {
-            setOnPingListener(listener);
-
+//            setOnPingListener(listener);
+            _aSerpiente = new Serpiente[_numserpientes];
+            _direccionSerpiente = new int[_numserpientes];
             _tamaño = tamaño;
             comidaCoor = new int[2];
             timerJuego = new Timer();
             niveles = new CNivel[4];
             niveles[0].dificultad = 0;
-            niveles[0].velocidad = 1000;
+            niveles[0].velocidad = 500;
             niveles[0].objetivo = 6;
             niveles[0].nivel = new Nivel(niveles[0].dificultad, niveles[0].velocidad, niveles[0].objetivo, _tamaño);
             niveles[1].dificultad = 1;
-            niveles[1].velocidad = 500;
+            niveles[1].velocidad = 400;
             niveles[1].objetivo = 12;
             niveles[1].nivel = new Nivel(niveles[1].dificultad, niveles[1].velocidad, niveles[1].objetivo, _tamaño);
             niveles[2].dificultad = 2;
-            niveles[2].velocidad = 400;
+            niveles[2].velocidad = 300;
             niveles[2].objetivo = 18;
             niveles[2].nivel = new Nivel(niveles[2].dificultad, niveles[2].velocidad, niveles[2].objetivo, _tamaño);
             niveles[3].dificultad = 3;
-            niveles[3].velocidad = 100;
+            niveles[3].velocidad = 200;
             niveles[3].objetivo = 10;
             niveles[3].nivel = new Nivel(niveles[3].dificultad, niveles[3].velocidad, niveles[3].objetivo, _tamaño);
 
-
-
-            nivelActual = niveles[nivel];
+                nivelActual = niveles[1];
             generarSerpiente();
             generarComida();
 
@@ -101,9 +101,10 @@ namespace WindowsFormsApplication1
         }
 
         //Transmite a serpiente la direccion actual
-        public void cambiardireccion(int direccion)
+        public void cambiardireccion(int[] direccion)
         {
-            serpiente.CambiarDireccion(direccion);
+            for (int i = 0; i < _numserpientes;i++ )
+                _aSerpiente[i].CambiarDireccion(direccion[i]);
         }
 
         //Genera un nuevo objeto comida  y actualiza las coordenadas
@@ -118,7 +119,7 @@ namespace WindowsFormsApplication1
             {
             x = r.Next(1, _tamaño - 1);
                 y = r.Next(1, _tamaño - 1);
-            } while (nivelActual.nivel.buscarenTablero(x, y) || serpiente.buscarenSerpiente(x,y,true));
+            } while (nivelActual.nivel.buscarenTablero(x, y) || _aSerpiente[0].buscarenSerpiente(x,y,true)|| _aSerpiente[1].buscarenSerpiente(x,y,true));
           
        
 
@@ -126,25 +127,33 @@ namespace WindowsFormsApplication1
             comida.setOnPingListener(this);
             comidaCoor[0] = comida.X;
             comidaCoor[1] = comida.Y;
-            cListener.onColor(comida.EstaSenyal);
+        //    cListener.onColor(comida.EstaSenyal);
         }
 
         private void generarSerpiente()
         {
             
             int x, y;
-            do
+
+
+            for (int i = 0; i < _numserpientes; i++)
             {
-                x = r.Next(1, _tamaño - 1);
-                y = r.Next(1, _tamaño - 1);
-            } while (nivelActual.nivel.buscarenTablero(x, y));
 
-            if (!nivelActual.nivel.buscarenTablero(x+1, y)) _direccionSerpiente=0;
-            else if (!nivelActual.nivel.buscarenTablero(x, y+1)) _direccionSerpiente=1;
-            else if (!nivelActual.nivel.buscarenTablero(x-1, y)) _direccionSerpiente = 2;
-            else if (!nivelActual.nivel.buscarenTablero(x, y-1)) _direccionSerpiente = 3;
 
-            serpiente = new Serpiente(x, y, _direccionSerpiente);
+                do
+                {
+                    x = r.Next(1, _tamaño - 1);
+                    y = r.Next(1, _tamaño - 1);
+                } while (nivelActual.nivel.buscarenTablero(x, y));
+
+                if (!nivelActual.nivel.buscarenTablero(x + 1, y)) _direccionSerpiente[i] = 0;
+                else if (!nivelActual.nivel.buscarenTablero(x, y + 1)) _direccionSerpiente[i] = 1;
+                else if (!nivelActual.nivel.buscarenTablero(x - 1, y)) _direccionSerpiente[i] = 2;
+                else if (!nivelActual.nivel.buscarenTablero(x, y - 1)) _direccionSerpiente[i] = 3;
+
+
+                _aSerpiente[i] = new Serpiente(x, y, _direccionSerpiente[i]);
+            }
         }
 
 
@@ -152,17 +161,26 @@ namespace WindowsFormsApplication1
         public void actualizar()
         {
 
-            serpiente.Mover();
-            if (comida.buscarenComida(serpiente.X, serpiente.Y))
+             for (int i =0; i<_numserpientes;i++)
+            _aSerpiente[i].Mover();
+            for (int i =0; i<_numserpientes;i++){
+            
+            if (comida.buscarenComida(_aSerpiente[i].X, _aSerpiente[i].Y))
             {
-                serpiente.crecer(comida.Cantidad);
+                _aSerpiente[i].crecer(comida.Cantidad);
                 generarPuntuacion(comida.Cantidad);
                 generarComida();
 
             }
-            _hayFin = nivelActual.nivel.buscarenTablero(serpiente.X, serpiente.Y);
 
-            if (_hayFin == false) _hayFin = serpiente.buscarenSerpiente(serpiente.X, serpiente.Y, false);
+            if (_hayFin == false) _hayFin = nivelActual.nivel.buscarenTablero(_aSerpiente[i].X, _aSerpiente[i].Y);
+
+            if (_hayFin == false) _hayFin = _aSerpiente[i].buscarenSerpiente(_aSerpiente[i].X, _aSerpiente[i].Y, false);
+            
+            }
+
+            if (_hayFin == false) _hayFin = _aSerpiente[0].buscarenSerpiente(_aSerpiente[1].X, _aSerpiente[1].Y, true);
+            if (_hayFin == false) _hayFin = _aSerpiente[1].buscarenSerpiente(_aSerpiente[0].X, _aSerpiente[0].Y, true);
         }
         //Busca si la posicion de la cabeza coincide con un nodo de la misma, del tablero o comida y acaba el juego o crea una nueva comida y crece
 
@@ -174,17 +192,14 @@ namespace WindowsFormsApplication1
         }
         Queue Interface1.getSerpiente()
         {
-            return serpiente.Cuerpo;
+            return _aSerpiente[_player].Cuerpo;
         }
 
-        void Interface1.setPlayer(int player)
-        {
 
-        }
 
         void Interface1.setDir(int dir)
         {
-            _direccionSerpiente = dir;
+            _direccionSerpiente[_player] = dir;
 
         }
 
@@ -218,8 +233,15 @@ namespace WindowsFormsApplication1
         {
             return nivelActual.objetivo;
         }
+        
+        void Interface1.setPlayer(int player)
+        {
+            _player=player;
+        }
+
         public void onPing()
         {
+
 
 
 
@@ -229,7 +251,7 @@ namespace WindowsFormsApplication1
             {
                 x = r.Next(1, _tamaño - 1);
                 y = r.Next(1, _tamaño - 1);
-            } while (nivelActual.nivel.buscarenTablero(x, y) || serpiente.buscarenSerpiente(x, y, true));
+            } while (nivelActual.nivel.buscarenTablero(x, y) || _aSerpiente[0].buscarenSerpiente(x, y, true) || _aSerpiente[0].buscarenSerpiente(x, y, true));
 
             comida.X = x;
             comida.Y = y;
@@ -240,7 +262,7 @@ namespace WindowsFormsApplication1
             if (!comida.EstaSenyal)
             {
                 comida.EstaSenyal = true;
-                cListener.onColor(comida.EstaSenyal);
+              //  cListener.onColor(comida.EstaSenyal);
             }
 
         }

@@ -52,7 +52,11 @@ namespace WindowsFormsApplication1
                 case 1:
                    generarBase();
                    generarPuntos(_numpuntos * dificultad);
+                    int[] coordenadas = new int[2];
 
+                coordenadas[0] = 3;
+                coordenadas[1] = 3;
+                _mapa.Enqueue(coordenadas);
                     break;
 
                 case 2:

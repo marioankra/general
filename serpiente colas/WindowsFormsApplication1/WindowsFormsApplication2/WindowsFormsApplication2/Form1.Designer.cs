@@ -28,57 +28,96 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            this.buttonEnt = new System.Windows.Forms.Button();
+            this.numericUpDownSelectLvl = new System.Windows.Forms.NumericUpDown();
+            this.checkBoxManLvl = new System.Windows.Forms.CheckBox();
+            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.buttonInd = new System.Windows.Forms.Button();
+            this.buttonMul = new System.Windows.Forms.Button();
+            this.checkBoxModo = new System.Windows.Forms.CheckBox();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSelectLvl)).BeginInit();
             this.SuspendLayout();
             // 
-            // button1
+            // buttonEnt
             // 
-            this.button1.Location = new System.Drawing.Point(13, 85);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.buttonEnt.Location = new System.Drawing.Point(134, 12);
+            this.buttonEnt.Name = "buttonEnt";
+            this.buttonEnt.Size = new System.Drawing.Size(75, 23);
+            this.buttonEnt.TabIndex = 1;
+            this.buttonEnt.Text = "Entrenamiento";
+            this.buttonEnt.UseVisualStyleBackColor = true;
+            this.buttonEnt.Click += new System.EventHandler(this.button1_Click);
             // 
-            // numericUpDown1
+            // numericUpDownSelectLvl
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(13, 115);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
+            this.numericUpDownSelectLvl.Location = new System.Drawing.Point(134, 50);
+            this.numericUpDownSelectLvl.Maximum = new decimal(new int[] {
             3,
             0,
             0,
             0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(75, 20);
-            this.numericUpDown1.TabIndex = 2;
-            this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
+            this.numericUpDownSelectLvl.Name = "numericUpDownSelectLvl";
+            this.numericUpDownSelectLvl.Size = new System.Drawing.Size(75, 20);
+            this.numericUpDownSelectLvl.TabIndex = 2;
+     
             // 
-            // checkBox1
+            // checkBoxManLvl
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(13, 151);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(80, 17);
-            this.checkBox1.TabIndex = 3;
-            this.checkBox1.Text = "checkBox1";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            this.checkBoxManLvl.AutoSize = true;
+            this.checkBoxManLvl.Location = new System.Drawing.Point(12, 51);
+            this.checkBoxManLvl.Name = "checkBoxManLvl";
+            this.checkBoxManLvl.Size = new System.Drawing.Size(98, 17);
+            this.checkBoxManLvl.TabIndex = 3;
+            this.checkBoxManLvl.Text = "Mantener Nivel";
+            this.checkBoxManLvl.UseVisualStyleBackColor = true;
+            this.checkBoxManLvl.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
+            // buttonInd
+            // 
+            this.buttonInd.Location = new System.Drawing.Point(12, 12);
+            this.buttonInd.Name = "buttonInd";
+            this.buttonInd.Size = new System.Drawing.Size(75, 23);
+            this.buttonInd.TabIndex = 4;
+            this.buttonInd.Text = "Individual";
+            this.buttonInd.UseVisualStyleBackColor = true;
+            this.buttonInd.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // buttonMul
+            // 
+            this.buttonMul.Location = new System.Drawing.Point(233, 12);
+            this.buttonMul.Name = "buttonMul";
+            this.buttonMul.Size = new System.Drawing.Size(75, 23);
+            this.buttonMul.TabIndex = 5;
+            this.buttonMul.Text = "Multi";
+            this.buttonMul.UseVisualStyleBackColor = true;
+            this.buttonMul.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // checkBoxModo
+            // 
+            this.checkBoxModo.AutoSize = true;
+            this.checkBoxModo.Location = new System.Drawing.Point(242, 50);
+            this.checkBoxModo.Name = "checkBoxModo";
+            this.checkBoxModo.Size = new System.Drawing.Size(47, 17);
+            this.checkBoxModo.TabIndex = 6;
+            this.checkBoxModo.Text = "A/B\'";
+            this.checkBoxModo.UseVisualStyleBackColor = true;
+            this.checkBoxModo.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 262);
-            this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.numericUpDown1);
-            this.Controls.Add(this.button1);
+            this.ClientSize = new System.Drawing.Size(358, 98);
+            this.Controls.Add(this.checkBoxModo);
+            this.Controls.Add(this.buttonMul);
+            this.Controls.Add(this.buttonInd);
+            this.Controls.Add(this.checkBoxManLvl);
+            this.Controls.Add(this.numericUpDownSelectLvl);
+            this.Controls.Add(this.buttonEnt);
             this.Name = "Form1";
             this.Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            this.Load += new System.EventHandler(this.Form1_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSelectLvl)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -86,9 +125,13 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Button buttonEnt;
+        private System.Windows.Forms.NumericUpDown numericUpDownSelectLvl;
+        private System.Windows.Forms.CheckBox checkBoxManLvl;
+        private System.Windows.Forms.ColorDialog colorDialog1;
+        private System.Windows.Forms.Button buttonInd;
+        private System.Windows.Forms.Button buttonMul;
+        private System.Windows.Forms.CheckBox checkBoxModo;
     }
 }
 

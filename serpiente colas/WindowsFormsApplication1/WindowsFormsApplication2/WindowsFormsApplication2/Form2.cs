@@ -15,15 +15,16 @@ namespace WindowsFormsApplication1
         private int escala;
         private Juego partida;
         private int[] _coordenadas;
-     
+
         Nodo n;
 
 
-        public Form2(int modo, int nivel)
+        public Form2(int modo, int opcion)
         {
+   
             InitializeComponent();
-            partida = new Juego();
-            partida.generarModo(modo, nivel);
+            partida = new Juego(modo, opcion);
+            
             
 
             timer1.Interval = 50;
@@ -54,7 +55,16 @@ namespace WindowsFormsApplication1
            
 
             System.Collections.IEnumerator ent = partida.Tablero.GetEnumerator();
+            partida.Player = 0;
             System.Collections.IEnumerator ens = partida.Serpiente.GetEnumerator();
+
+            while (ens.MoveNext())
+            {
+                n = (Nodo)ens.Current;
+                lienzo.FillRectangle(partida.CSerpiente, n.X * escala, n.Y * escala, escala, escala);
+
+            }
+
             while (ent.MoveNext())
             {
               
@@ -63,6 +73,9 @@ namespace WindowsFormsApplication1
 
             }
 
+
+            partida.Player = 1;
+            ens = partida.Serpiente.GetEnumerator();
             while (ens.MoveNext())
             {
                 n = (Nodo)ens.Current;
@@ -86,24 +99,59 @@ namespace WindowsFormsApplication1
         {
             if (e.KeyData == Keys.W)
             {
+                partida.Player = 0;
                 partida.Direccion = 3;
             }
 
             if (e.KeyData == Keys.D)
             {
+                partida.Player = 0;
                 partida.Direccion = 0;
             }
 
             if (e.KeyData == Keys.S)
             {
+                partida.Player = 0;
                 partida.Direccion = 1;
             }
 
 
             if (e.KeyData == Keys.A)
             {
+                partida.Player = 0;
                 partida.Direccion = 2;
             }
+
+            if (e.KeyData == Keys.I)
+            {
+                partida.Player = 1;
+                partida.Direccion = 3;
+            }
+
+            if (e.KeyData == Keys.L)
+            {
+                partida.Player = 1;
+                partida.Direccion = 0;
+            }
+
+            if (e.KeyData == Keys.K)
+            {
+                partida.Player = 1;
+                partida.Direccion = 1;
+            }
+
+
+            if (e.KeyData == Keys.J)
+            {
+                partida.Player = 1;
+                partida.Direccion = 2;
+            }
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
         }
 
     
