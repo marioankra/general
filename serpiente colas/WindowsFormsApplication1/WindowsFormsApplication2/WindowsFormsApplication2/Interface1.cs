@@ -21,5 +21,6 @@ namespace WindowsFormsApplication1
          int getPuntuacion();
          int getObjetivo();
          void setPlayer(int player);
+         int getPlayer();
     }
 }

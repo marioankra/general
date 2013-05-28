@@ -44,7 +44,7 @@ namespace WindowsFormsApplication1
         private CNivel[] niveles;
         private CNivel nivelActual;
         private int _puntos;
-
+       
         private Random r = new Random(DateTime.Now.Millisecond);
 
 
@@ -74,7 +74,7 @@ namespace WindowsFormsApplication1
             timerJuego = new Timer();
             niveles = new CNivel[4];
             niveles[0].dificultad = 0;
-            niveles[0].velocidad = 1000;
+            niveles[0].velocidad = 500;
             niveles[0].objetivo = 6;
             niveles[0].nivel = new Nivel(niveles[0].dificultad, niveles[0].velocidad, niveles[0].objetivo, _tamaño);
             niveles[1].dificultad = 1;
@@ -82,14 +82,14 @@ namespace WindowsFormsApplication1
             niveles[1].objetivo = 12;
             niveles[1].nivel = new Nivel(niveles[1].dificultad, niveles[1].velocidad, niveles[1].objetivo, _tamaño);
             niveles[2].dificultad = 2;
-            niveles[2].velocidad = 400;
+            niveles[2].velocidad = 500;
             niveles[2].objetivo = 1;
             niveles[2].nivel = new Nivel(niveles[2].dificultad, niveles[2].velocidad, niveles[2].objetivo, _tamaño);
             niveles[3].dificultad = 3;
-            niveles[3].velocidad = 200;
+            niveles[3].velocidad = 500;
             niveles[3].objetivo = 1;
             niveles[3].nivel = new Nivel(niveles[3].dificultad, niveles[3].velocidad, niveles[3].objetivo, _tamaño);
-            nivelActual = niveles[2];
+            nivelActual = niveles[3];
             generarSerpiente();
             generarComida();
             timerJuego.Interval = nivelActual.velocidad;
@@ -105,7 +105,7 @@ namespace WindowsFormsApplication1
         {
             if (_puntos >= nivelActual.objetivo)
             {
-                
+                int hola = niveles.Length;
                 if (nivelActual.dificultad == niveles.Length-1) _hayFin = true;
                 else
                 {
@@ -123,7 +123,6 @@ namespace WindowsFormsApplication1
              
                         timerJuego.Stop();
                         //TODO
-                        
                         timerJuego.Interval = nivelActual.velocidad;
                         timerJuego.Start();
                     
@@ -194,7 +193,7 @@ namespace WindowsFormsApplication1
                 generarComida();
 
             }
-            _hayFin = nivelActual.nivel.buscarenTablero(serpiente.X, serpiente.Y);
+            if (_hayFin == false) _hayFin = nivelActual.nivel.buscarenTablero(serpiente.X, serpiente.Y);
 
             if (_hayFin == false) _hayFin = serpiente.buscarenSerpiente(serpiente.X, serpiente.Y, false);
         }
@@ -223,6 +222,12 @@ namespace WindowsFormsApplication1
         {
         
         }
+
+        int Interface1.getPlayer()
+        {
+            return 1;
+        }
+
 
         int Interface1.getTamaño()
         {

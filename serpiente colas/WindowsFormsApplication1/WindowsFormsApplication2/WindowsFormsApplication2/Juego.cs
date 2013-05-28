@@ -32,7 +32,7 @@ namespace WindowsFormsApplication1
 
         }
         
-        public  Juego(int tipo, int opcion) {
+        public  Juego(int tipo, int opcion,int nivel) {
             entrenamiento=null;
             multi=null;
             individual=null;
@@ -41,7 +41,7 @@ namespace WindowsFormsApplication1
             switch (_modo)
             {
                 case 1:
-                    entrenamiento = new Entrenamiento(_tamaño, opcion,this);
+                    entrenamiento = new Entrenamiento(_tamaño,nivel,this);
                   
                     juegoActual = entrenamiento;
                    
@@ -53,7 +53,7 @@ namespace WindowsFormsApplication1
                    
                     break;
                  case 3:
-                multi = new Multi(_tamaño, opcion);
+                multi = new Multi(_tamaño, opcion,nivel);
                   
                     juegoActual = multi;
                   
@@ -82,7 +82,9 @@ namespace WindowsFormsApplication1
 
         }
 
-        public int  Player {set { juegoActual.setPlayer(value); } }
+        public int  Player {set { juegoActual.setPlayer(value); }
+            get { return juegoActual.getPlayer(); }
+        }
         public Queue Tablero { get { return juegoActual.getTablero(); } }
         public Queue Serpiente { get { return juegoActual.getSerpiente(); } }
 

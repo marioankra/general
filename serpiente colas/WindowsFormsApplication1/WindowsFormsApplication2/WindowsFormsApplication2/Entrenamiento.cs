@@ -188,6 +188,10 @@ namespace WindowsFormsApplication1
 
         }
 
+        int Interface1.getPlayer()
+        {
+            return 1;
+        }
 
         int Interface1.getTamaño()
         {

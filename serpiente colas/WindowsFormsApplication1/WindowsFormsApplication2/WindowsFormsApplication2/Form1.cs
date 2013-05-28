@@ -24,7 +24,7 @@ namespace WindowsFormsApplication1
         private void button1_Click(object sender, EventArgs e)
         {
            
-            Form2 frm = new Form2(1,(int)numericUpDownSelectLvl.Value);
+            Form2 frm = new Form2(1,0,(int)numericUpDownSelectLvl.Value);
             frm.ShowDialog();
 
         }
@@ -32,13 +32,13 @@ namespace WindowsFormsApplication1
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Form2 frm = new Form2(2,_opcion);
+            Form2 frm = new Form2(2,_opcion,(int)numericUpDownSelectLvl.Value);
             frm.ShowDialog();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            Form2 frm = new Form2(3, _opcion);
+            Form2 frm = new Form2(3, _opcion, (int)numericUpDownSelectLvl.Value);
             frm.ShowDialog();
         }
 

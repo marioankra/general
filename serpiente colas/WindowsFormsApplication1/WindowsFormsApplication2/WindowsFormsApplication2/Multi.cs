@@ -63,7 +63,7 @@ namespace WindowsFormsApplication1
 
 
 
-        public Multi(int tamaño, int nivel /*, OnPingListener listener*/)
+        public Multi(int tamaño,int opcion, int nivel /*, OnPingListener listener*/)
         {
 //            setOnPingListener(listener);
             _aSerpiente = new Serpiente[_numserpientes];
@@ -89,7 +89,7 @@ namespace WindowsFormsApplication1
             niveles[3].objetivo = 10;
             niveles[3].nivel = new Nivel(niveles[3].dificultad, niveles[3].velocidad, niveles[3].objetivo, _tamaño);
 
-                nivelActual = niveles[1];
+                nivelActual = niveles[nivel];
             generarSerpiente();
             generarComida();
 
@@ -142,7 +142,7 @@ namespace WindowsFormsApplication1
 
                 do
                 {
-                    x = r.Next(1, _tamaño - 1);
+                    x = r.Next(1, (_tamaño - 1)/2 + i*(_tamaño-1)/2);
                     y = r.Next(1, _tamaño - 1);
                 } while (nivelActual.nivel.buscarenTablero(x, y));
 
@@ -237,6 +237,11 @@ namespace WindowsFormsApplication1
         void Interface1.setPlayer(int player)
         {
             _player=player;
+        }
+
+       int Interface1.getPlayer()
+        {
+            return _player;
         }
 
         public void onPing()

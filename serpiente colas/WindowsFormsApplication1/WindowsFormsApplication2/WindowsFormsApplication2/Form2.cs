@@ -15,15 +15,15 @@ namespace WindowsFormsApplication1
         private int escala;
         private Juego partida;
         private int[] _coordenadas;
-
+        private int _modo;
         Nodo n;
 
 
-        public Form2(int modo, int opcion)
+        public Form2(int modo, int opcion,int nivel)
         {
-   
+            _modo = modo;
             InitializeComponent();
-            partida = new Juego(modo, opcion);
+            partida = new Juego(modo, opcion,nivel);
             
             
 
@@ -40,7 +40,21 @@ namespace WindowsFormsApplication1
         {
             pictureBox1.Refresh();
            // textBox1.Text = partida.Puntos.ToString();
-            label1.Text = "Puntuación: " + partida.Puntos.ToString() + " Objetivo: " + partida.Objetivo.ToString();
+
+
+
+            switch (_modo)
+            {
+                case 1:
+
+                    label1.Text = "Puntuación: " + partida.Puntos.ToString() + " Objetivo: " + partida.Objetivo.ToString();
+                    break;
+                case 2:
+                    label1.Text = "Puntuación: " + partida.Puntos.ToString();
+                    break;
+            }
+
+
            // textBox2.Text = partida.Objetivo.ToString();
         }
 
@@ -115,13 +129,14 @@ namespace WindowsFormsApplication1
                 partida.Direccion = 1;
             }
 
-
+            
             if (e.KeyData == Keys.A)
             {
                 partida.Player = 0;
                 partida.Direccion = 2;
             }
-
+            if (partida.Player ==2)
+            {
             if (e.KeyData == Keys.I)
             {
                 partida.Player = 1;
@@ -146,7 +161,7 @@ namespace WindowsFormsApplication1
                 partida.Player = 1;
                 partida.Direccion = 2;
             }
-
+        }
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
